@@ -1,0 +1,17 @@
+<div class="header">
+    <nav class="container">
+        <div class="left">
+            <div class="logo">
+                <h4>ERP SYSTEM</h4>
+            </div>
+        </div>
+        <div class="right">
+            <a routerLink="/schedule">Schedule Meeting</a>
+            <a routerLink="/syllabus">Syllabus</a>
+            <a routerLink="/notification">Notification</a>
+            <a routerLink="/scheduler">ESE Scheduler</a>
+            <a routerLink="/cie-entry">CIE Entry</a>
+            <button *ngIf="isLoggedIn" mat-raised-button color="warn" (click)="logout()">Logout</button>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,154 @@
+<br>
+<div class="wide-container">
+    <mat-card style="padding: 30px">
+        <div class="flex align-center justify-between">
+            <mat-card-title>
+                CIE Marks Entry
+            </mat-card-title>
+            <a routerLink="/cie-marks-list" mat-raised-button color="primary">View CIE Marks</a>
+        </div>
+        <br>
+        <form>
+            <mat-form-field appearance="fill" >
+                <mat-label>Department</mat-label>
+                <mat-select
+                    [formControl]="departmentControl"
+                >
+                  <mat-option *ngFor="let option of departments | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Faculty</mat-label>
+                <mat-select
+                    [formControl]="facultyControl"
+                >
+                  <mat-option *ngFor="let option of faculties | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Program</mat-label>
+                <mat-select
+                    [formControl]="programControl"
+                >
+                  <mat-option *ngFor="let option of programs | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <br>
+            <mat-form-field appearance="fill" >
+                <mat-label>Year</mat-label>
+                <mat-select
+                    [formControl]="yearControl"
+                >
+                  <mat-option *ngFor="let option of years | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Divisions</mat-label>
+                <mat-select
+                    [formControl]="divisionControl"
+                >
+                  <mat-option *ngFor="let option of divisions | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Schools</mat-label>
+                <mat-select
+                    [formControl]="schoolControl"
+                >
+                  <mat-option *ngFor="let option of schools | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+                <br>
+                <br>
+            <mat-form-field appearance="fill" >
+                <mat-label>Semester</mat-label>
+                <mat-select
+                    [formControl]="semesterControl"
+                >
+                  <mat-option *ngFor="let option of semesters | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Subject</mat-label>
+                <mat-select
+                    [formControl]="subjectControl"
+                >
+                  <mat-option *ngFor="let option of subjects | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+                <br>
+                <br>
+                <br><br>
+                <button (click)="add()" mat-raised-button color="primary">Add CIE</button>
+        </form>
+        <br><br>
+        <table matSort (matSortChange)="announceSortChange($event)"  *ngIf="dataSource.length" mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+            <ng-container matColumnDef="PRN">
+              <th mat-header-cell *matHeaderCellDef>PRN</th>
+              <td mat-cell *matCellDef="let element">
+                  <input [(ngModel)]="element.prn" type="text" placeholder="PRN">
+              </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="SRN">
+              <th mat-header-cell *matHeaderCellDef>SRN</th>
+              <td mat-cell *matCellDef="let element">
+                <input [(ngModel)]="element.srn" type="text" placeholder="SRN">
+              </td>
+            </ng-container>          
+            <ng-container matColumnDef="Total CIE">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+                Total Cie
+              </th>
+              <td mat-cell *matCellDef="let element">
+                <input [(ngModel)]="element.totalCie" 
+                [value]="convertToNumber(element.cie1,element.cie2,element.cie3)" 
+                type="text" placeholder="Total">
+              </td>
+            </ng-container>          
+            <ng-container matColumnDef="Student Name">
+              <th mat-header-cell *matHeaderCellDef>Student Name</th>
+              <td mat-cell *matCellDef="let element">
+                  <input [(ngModel)]="element.studentName" type="text" placeholder="Student Name">
+              </td>
+            </ng-container>          
+            <ng-container matColumnDef="CIE 1">
+              <th mat-header-cell *matHeaderCellDef>CIE 1</th>
+              <td mat-cell *matCellDef="let element"> 
+                  <input [(ngModel)]="element.cie1" type="text" placeholder="CIE 1"> </td>
+            </ng-container>          
+            <ng-container matColumnDef="CIE 2">
+              <th mat-header-cell *matHeaderCellDef>CIE 2</th>
+              <td mat-cell *matCellDef="let element">
+                  <input [(ngModel)]="element.cie2" type="text" placeholder="CIE 2"> </td>
+            </ng-container>          
+            <ng-container matColumnDef="CIE 3">
+              <th mat-header-cell *matHeaderCellDef>CIE 3</th>
+              <td mat-cell *matCellDef="let element">
+                  <input [(ngModel)]="element.cie3" type="text" placeholder="CIE 3"></td>
+            </ng-container>          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <br><br>
+          <button (click)="saveData()" mat-raised-button color="primary">Save data</button>
+    </mat-card>
+
+</div>

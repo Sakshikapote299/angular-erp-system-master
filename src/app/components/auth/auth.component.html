@@ -1,0 +1,41 @@
+<br>
+<div class="container">
+    <mat-card style="width: 600px; margin: 0 auto; padding: 20px;">
+        <mat-tab-group>
+            <mat-tab label="Login">
+                <br>
+                <br>
+                <form [formGroup]="loginForm" (submit)="login()">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input type="email" formControlName="email" name="email" matInput placeholder="Ex. john@doe.com">
+                      </mat-form-field>
+                    
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input type="password" formControlName="password" name="password" matInput placeholder="**********"/>
+                      </mat-form-field>
+                      <br>
+                      <button mat-raised-button color="primary">Login</button>
+                </form>
+            </mat-tab>
+            <mat-tab label="Signup">
+                <br>
+                <br>
+                <form [formGroup]="signUpForm" (submit)="signUp()">
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input formControlName="email" matInput placeholder="Ex. john@doe.com">
+                      </mat-form-field>
+                    
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input type="password" formControlName="password" matInput placeholder="*********" />
+                      </mat-form-field>
+                      <br>
+                      <button mat-raised-button color="primary">Sign Up</button>
+                </form>
+            </mat-tab>
+          </mat-tab-group>
+    </mat-card>
+</div>

@@ -1,0 +1,202 @@
+<div class="container">
+    <br>
+    <h3>Notifications</h3>
+    <br>
+    <div *ngIf="eseSchedules">
+        <div *ngFor="let ese of eseSchedules" style="margin: 20px 0">
+            <mat-card class="meet-card" style="padding: 20px">
+                <mat-card-title>{{ese.subject}}</mat-card-title>
+                <mat-card-subtitle>{{ese.venue}}</mat-card-subtitle>
+                <mat-card-content>
+                    <p>Division - <strong>{{ ese.division }}</strong></p>
+                    <p>Subject - <strong>{{ ese.subject }}</strong></p>
+                    <p>Details - <strong>{{ ese.details }}</strong></p>
+                    <p>Faculty - <strong>{{ ese.faculty }}</strong></p>
+                    <p>Class - <strong>{{ ese.classIn }}</strong></p>
+                    <p>Department - <strong>{{ ese.department }}</strong></p>
+                </mat-card-content>
+                <div class="abs-btn">
+                    <button (click)="onEditClick(ese)" style="margin-right: 10px" mat-raised-button>Edit</button>
+                    <button (click)="deleteEse(ese._id)" mat-raised-button color="warn">Delete</button>
+                </div>
+                <table *ngIf="ese.eseSchedules.length" mat-table [dataSource]="ese.eseSchedules" class="mat-elevation-z1">
+                    <ng-container matColumnDef="Pattern">
+                      <th mat-header-cell *matHeaderCellDef> Pattern </th>
+                      <td mat-cell *matCellDef="let element"> {{element.pattern}} </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="Subject Code">
+                      <th mat-header-cell *matHeaderCellDef>Subject Code</th>
+                      <td mat-cell *matCellDef="let element"> {{element.subjectCode}} </td>
+                    </ng-container>          
+                    <ng-container matColumnDef="Subject Name">
+                      <th mat-header-cell *matHeaderCellDef>Subject Name</th>
+                      <td mat-cell *matCellDef="let element"> {{element.subjectName}} </td>
+                    </ng-container>          
+                    <ng-container matColumnDef="Date">
+                      <th mat-header-cell *matHeaderCellDef>Date</th>
+                      <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                    </ng-container>          
+                    <ng-container matColumnDef="Time">
+                      <th mat-header-cell *matHeaderCellDef>Time</th>
+                      <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+                    </ng-container>          
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+            </mat-card>
+        </div>
+        <br>
+        <div *ngIf="showEditModal" class="overlay">
+            <mat-card style="width: 700px; height: 500px; overflow-y:scroll; padding: 30px;">
+                <mat-card-title>Edit Syllabus</mat-card-title>
+                <form>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Department</mat-label>
+                        <mat-select
+                            [formControl]="departmentControl"
+                        >
+                          <mat-option *ngFor="let option of departments | async" [value]="option.name">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Faculty</mat-label>
+                        <mat-select
+                            [formControl]="facultyControl"
+                        >
+                          <mat-option *ngFor="let option of faculties | async" [value]="option.name">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Program</mat-label>
+                        <mat-select
+                            [formControl]="programControl"
+                        >
+                          <mat-option *ngFor="let option of programs | async" [value]="option.name">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <br>
+                      <br>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Year</mat-label>
+                        <mat-select
+                            [formControl]="yearControl"
+                        >
+                          <mat-option *ngFor="let option of years | async" [value]="option.name">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Divisions</mat-label>
+                        <mat-select
+                            [formControl]="divisionControl"
+                        >
+                          <mat-option *ngFor="let option of divisions | async" [value]="option.name">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Schools</mat-label>
+                        <mat-select
+                            [formControl]="schoolControl"
+                        >
+                          <mat-option *ngFor="let option of schools | async" [value]="option.name">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Semester</mat-label>
+                        <mat-select
+                            [formControl]="semesterControl"
+                        >
+                          <mat-option *ngFor="let option of semesters | async" [value]="option.name">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                    <mat-form-field appearance="fill" >
+                        <mat-label>Subject</mat-label>
+                        <mat-select
+                            [formControl]="subjectControl"
+                        >
+                          <mat-option *ngFor="let option of subjects | async" [value]="option.name">
+                            {{option.name}}
+                          </mat-option>
+                        </mat-select>
+                        </mat-form-field>
+                        <br>
+                        <br>
+                        <mat-form-field  appearance="fill" style="width: 450px;">
+                            <mat-label>Pattern</mat-label>
+                            <input [formControl]="pattern" matInput placeholder="Pattern" />
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field  appearance="fill" style="width: 450px;">
+                            <mat-label>Subject Code</mat-label>
+                            <input  [formControl]="subjectCode" matInput placeholder="Subject Code"/>
+                        </mat-form-field>
+                        <br>
+                        <mat-form-field  appearance="fill" style="width: 450px;">
+                            <mat-label>Subject Name</mat-label>
+                            <input  [formControl]="subjectName" matInput placeholder="Subject Code"/>
+                        </mat-form-field>
+                        <br><br>
+                        <mat-form-field appearance="fill" >
+                            <mat-label>Choose a date</mat-label>
+                            <input [formControl]="date" matInput [matDatepicker]="picker" required>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" >
+                            <mat-label>Choose Time</mat-label>
+                            <input [formControl]="time" matInput type="time" placeholder="start date" required>
+                        </mat-form-field>
+                        <br><br>
+                        <button (click)="add()" mat-raised-button color="primary">Add Schedule</button>
+                </form>
+                <br><br>
+                <table *ngIf="dataSource.length" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <ng-container matColumnDef="Pattern">
+                        <th mat-header-cell *matHeaderCellDef> Pattern </th>
+                        <td mat-cell *matCellDef="let element"> {{element.pattern}} </td>
+                      </ng-container>
+                    
+                      <ng-container matColumnDef="Subject Code">
+                        <th mat-header-cell *matHeaderCellDef>Subject Code</th>
+                        <td mat-cell *matCellDef="let element"> {{element.subjectCode}} </td>
+                      </ng-container>          
+                      <ng-container matColumnDef="Subject Name">
+                        <th mat-header-cell *matHeaderCellDef>Subject Name</th>
+                        <td mat-cell *matCellDef="let element"> {{element.subjectName}} </td>
+                      </ng-container>          
+                      <ng-container matColumnDef="Date">
+                        <th mat-header-cell *matHeaderCellDef>Date</th>
+                        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                      </ng-container>          
+                      <ng-container matColumnDef="Time">
+                        <th mat-header-cell *matHeaderCellDef>Time</th>
+                        <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+                      </ng-container>          
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                  <br><br>
+                  <button class="example-full-width" (click)="saveData()" mat-raised-button color="primary">Save data</button>
+                  <br>
+                  <br>
+                  <button class="example-full-width" mat-raised-button color="warn" (click)="closeModal()">Close</button>
+
+            </mat-card>
+    </div>
+</div>

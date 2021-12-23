@@ -1,0 +1,112 @@
+<br>
+<div class="container">
+    <mat-card style="padding: 30px">
+        <div class="flex align-center justify-between">
+            <mat-card-title>
+                Create Syllabus
+            </mat-card-title>
+            <a routerLink="/syllabus-list" mat-raised-button color="primary">View Syllabuses</a>
+        </div>
+        <br>
+        <form>
+            <mat-form-field appearance="fill" >
+                <mat-label>Department</mat-label>
+                <mat-select
+                    [formControl]="departmentControl"
+                >
+                  <mat-option *ngFor="let option of departments | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Faculty</mat-label>
+                <mat-select
+                    [formControl]="facultyControl"
+                >
+                  <mat-option *ngFor="let option of faculties | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Program</mat-label>
+                <mat-select
+                    [formControl]="programControl"
+                >
+                  <mat-option *ngFor="let option of programs | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <br>
+              <br>
+            <mat-form-field appearance="fill" >
+                <mat-label>Year</mat-label>
+                <mat-select
+                    [formControl]="yearControl"
+                >
+                  <mat-option *ngFor="let option of years | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Divisions</mat-label>
+                <mat-select
+                    [formControl]="divisionControl"
+                >
+                  <mat-option *ngFor="let option of divisions | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            <mat-form-field appearance="fill" >
+                <mat-label>Schools</mat-label>
+                <mat-select
+                    [formControl]="schoolControl"
+                >
+                  <mat-option *ngFor="let option of schools | async" [value]="option.name">
+                    {{option.name}}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+                <br>
+                <br>
+                <mat-form-field  appearance="fill" style="width: 450px;">
+                    <mat-label>Content</mat-label>
+                    <textarea [formControl]="content" matInput placeholder="Content"></textarea>
+                </mat-form-field>
+                <br>
+                <mat-form-field  appearance="fill" style="width: 450px;">
+                    <mat-label>Unit Name</mat-label>
+                    <input [formControl]="unit" matInput placeholder="Unit" />
+                </mat-form-field>
+                <br>
+                <mat-form-field  appearance="fill" style="width: 450px;">
+                    <mat-label>Unit Details</mat-label>
+                    <textarea rows="5" [formControl]="unitDetails" matInput placeholder="Unit details"></textarea>
+                </mat-form-field>
+                <br><br>
+                <button (click)="add()" mat-raised-button color="primary">Add Syllabus</button>
+        </form>
+        <br><br>
+        <table *ngIf="dataSource.length" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="Unit">
+              <th mat-header-cell *matHeaderCellDef> Unit </th>
+              <td mat-cell *matCellDef="let element"> {{element.unit}} </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="Details">
+              <th mat-header-cell *matHeaderCellDef> Details</th>
+              <td mat-cell *matCellDef="let element"> {{element.details}} </td>
+            </ng-container>          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <br><br>
+          <button (click)="saveData()" mat-raised-button color="primary">Save data</button>
+    </mat-card>
+
+    
+</div>

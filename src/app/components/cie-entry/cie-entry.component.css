@@ -1,0 +1,14 @@
+table {
+    max-width: 100%;
+    overflow-x: scroll;
+}
+th, td {
+    width: 100px !important;
+}
+input {
+    padding: 10px 5px;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+  }
